@@ -1,0 +1,15 @@
+services:
+  client:
+    build:
+      context: ./client
+      args:
+        # Vite inlines VITE_* at build time; point it at the platform API origin.
+        VITE_API_URL: ${VITE_API_URL:-https://api.ruudjuffermans.nl}
+    restart: unless-stopped
+    networks:
+      - dokploy-network
+
+networks:
+  # Dokploy's proxy network; Traefik routes public traffic to services on it.
+  dokploy-network:
+    external: true

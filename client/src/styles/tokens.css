@@ -1,0 +1,160 @@
+/* Design tokens + base styles replicating the ruudjuffermans.nl hero aesthetic. */
+
+:root,
+[data-theme='light'] {
+  --app-bg: #ffffff;
+  --app-surface: #f7f8fa;
+  --app-surface-elevated: #ffffff;
+  --app-border: #e2e8f0;
+  --app-border-soft: #edf1f6;
+  --app-divider: #f1f5f9;
+  --app-gray-50: #f8fafc;
+  --app-gray-100: #f1f5f9;
+  --app-gray-200: #e2e8f0;
+  --app-gray-300: #cbd5e1;
+  --app-gray-400: #94a3b8;
+  --app-gray-500: #64748b;
+  --app-gray-600: #475569;
+  --app-gray-700: #334155;
+  --app-gray-800: #1e293b;
+  --app-gray-900: #0f172a;
+  --app-red: #dd2e5a;
+  --app-red-hover: #b8244c;
+  --app-red-light: #f87190;
+  --app-red-muted: rgba(221, 46, 90, 0.1);
+  --app-red-glow: rgba(221, 46, 90, 0.22);
+  --app-text-primary: #0f172a;
+  --app-text-secondary: #5b6b81;
+  --app-text-muted: #94a3b8;
+  /* Local additions (success alerts). */
+  --app-green: #15803d;
+  --app-green-muted: rgba(22, 163, 74, 0.1);
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --app-bg: #0a0f1c;
+  --app-surface: #111726;
+  --app-surface-elevated: #161d30;
+  --app-border: #283048;
+  --app-border-soft: #1e2538;
+  --app-divider: #1e2538;
+  --app-gray-50: #161d30;
+  --app-gray-100: #1e2538;
+  --app-gray-200: #283048;
+  --app-gray-300: #3b475c;
+  --app-gray-400: #64748b;
+  --app-gray-500: #94a3b8;
+  --app-gray-600: #cbd5e1;
+  --app-gray-700: #dbe3ee;
+  --app-gray-800: #e8edf5;
+  --app-gray-900: #f4f7fb;
+  --app-red: #ef4d76;
+  --app-red-hover: #f87190;
+  --app-red-light: #fcabc0;
+  --app-red-muted: rgba(248, 113, 144, 0.14);
+  --app-red-glow: rgba(248, 113, 144, 0.3);
+  --app-text-primary: #f4f7fb;
+  --app-text-secondary: #b9c4d6;
+  --app-text-muted: #94a3b8;
+  --app-green: #4ade80;
+  --app-green-muted: rgba(74, 222, 128, 0.12);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: var(--app-bg);
+  color: var(--app-text-primary);
+  font-family: 'Outfit Variable', 'Segoe UI', sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Bricolage Grotesque Variable', Georgia, serif;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--app-text-primary);
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw + 1rem, 3rem);
+  line-height: 1.04;
+}
+
+a {
+  color: var(--app-red);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* The signature hero background: dot grid masked to the top-right + a soft
+   red glow. Full-viewport wrapper behind the auth card and the dashboard. */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.hero::after {
+  /* dot grid */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--app-gray-200) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 80% 10%, black 0%, transparent 68%);
+  mask-image: radial-gradient(ellipse 90% 70% at 80% 10%, black 0%, transparent 68%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.hero::before {
+  /* soft red glow top-right */
+  content: '';
+  position: absolute;
+  top: -280px;
+  right: -160px;
+  width: 720px;
+  height: 720px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--app-red-muted) 0%, transparent 62%);
+  pointer-events: none;
+}
