@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from './auth';
 import { Dashboard } from './pages/dashboard/Dashboard';
+import { Settings } from './pages/dashboard/Settings';
 import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
 import { ForgotPassword } from './pages/auth/ForgotPassword';
@@ -20,6 +21,12 @@ export function App() {
         path="/"
         element={
           loading ? <Splash>Loading…</Splash> : user ? <Dashboard /> : <Navigate to="/login" replace />
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          loading ? <Splash>Loading…</Splash> : user ? <Settings /> : <Navigate to="/login" replace />
         }
       />
       <Route path="/login" element={<Login />} />
