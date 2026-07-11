@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useAuth } from './auth';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { Settings } from './pages/dashboard/Settings';
+import { Admin } from './pages/admin/Admin';
 import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
 import { ForgotPassword } from './pages/auth/ForgotPassword';
@@ -27,6 +28,12 @@ export function App() {
         path="/settings"
         element={
           loading ? <Splash>Loading…</Splash> : user ? <Settings /> : <Navigate to="/login" replace />
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          loading ? <Splash>Loading…</Splash> : user ? <Admin /> : <Navigate to="/login" replace />
         }
       />
       <Route path="/login" element={<Login />} />

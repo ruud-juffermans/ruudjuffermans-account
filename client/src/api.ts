@@ -1,4 +1,12 @@
-import type { AuthUser, PlatformConfig, SessionInfo } from './types';
+import type {
+  AdminUser,
+  AuthUser,
+  ContactStatus,
+  ContactSubmission,
+  NewsletterSubscriber,
+  PlatformConfig,
+  SessionInfo,
+} from './types';
 
 // Empty base in dev: Vite proxies /api → http://localhost:4000 (see
 // vite.config.ts). In production builds VITE_API_URL is baked in.
@@ -77,6 +85,49 @@ export const account = {
     request<{ ok: true }>(`/api/account/sessions/${encodeURIComponent(id)}`, { method: 'DELETE' }),
   revokeOthers: () => post<{ ok: true }>('/api/account/sessions/revoke-others'),
   revokeAll: () => post<{ ok: true }>('/api/account/sessions/revoke-all'),
+};
+
+// Admin API — gated server-side (requireServiceOrAdmin); the UI additionally
+// only renders these for user.role === 'admin'.
+export const admin = {
+  // Platform users (metadata only).
+  users: (search?: string) =>
+    request<{ users: AdminUser[] }>(
+      `/api/account/admin/users${search ? `?search=${encodeURIComponent(search)}` : ''}`,
+    ),
+  suspendUser: (id: string) => post<{ ok: true }>(`/api/account/admin/users/${encodeURIComponent(id)}/suspend`),
+  unsuspendUser: (id: string) =>
+    post<{ ok: true }>(`/api/account/admin/users/${encodeURIComponent(id)}/unsuspend`),
+  deleteUser: (id: string) =>
+    request<{ ok: true }>(`/api/account/admin/users/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  resetUserPassword: (id: string) =>
+    post<{ ok: true }>(`/api/account/admin/users/${encodeURIComponent(id)}/reset-password`),
+  verifyUserEmail: (id: string) =>
+    post<{ ok: true }>(`/api/account/admin/users/${encodeURIComponent(id)}/verify-email`),
+  revokeUserSessions: (id: string) =>
+    post<{ ok: true }>(`/api/account/admin/users/${encodeURIComponent(id)}/revoke-sessions`),
+
+  // Website: contact-form submissions.
+  contactSubmissions: (status?: ContactStatus) =>
+    request<{ submissions: ContactSubmission[] }>(
+      `/api/website/admin/contact${status ? `?status=${status}` : ''}`,
+    ),
+  setContactStatus: (id: string, status: ContactStatus) =>
+    request<{ submission: ContactSubmission }>(
+      `/api/website/admin/contact/${encodeURIComponent(id)}/status`,
+      { method: 'PATCH', body: JSON.stringify({ status }) },
+    ),
+  deleteContactSubmission: (id: string) =>
+    request<{ ok: true }>(`/api/website/admin/contact/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+
+  // Website: newsletter subscribers.
+  subscribers: () => request<{ subscribers: NewsletterSubscriber[] }>('/api/website/admin/newsletter'),
+  unsubscribeSubscriber: (id: string) =>
+    post<{ subscriber: NewsletterSubscriber }>(
+      `/api/website/admin/newsletter/${encodeURIComponent(id)}/unsubscribe`,
+    ),
+  deleteSubscriber: (id: string) =>
+    request<{ ok: true }>(`/api/website/admin/newsletter/${encodeURIComponent(id)}`, { method: 'DELETE' }),
 };
 
 // The platform config is static per deployment; cache the promise so the login

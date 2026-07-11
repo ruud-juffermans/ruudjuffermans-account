@@ -7,7 +7,7 @@ import { Button, Hero } from '../../components/ui';
 // Shared chrome for the signed-in pages (apps overview + settings): brand bar
 // with navigation and sign-out, on the ruudjuffermans.nl hero background.
 export function Shell({ children }: { children: ReactNode }) {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   async function onSignOut() {
@@ -27,6 +27,7 @@ export function Shell({ children }: { children: ReactNode }) {
               Apps
             </TabLink>
             <TabLink to="/settings">Settings</TabLink>
+            {user?.role === 'admin' && <TabLink to="/admin">Admin</TabLink>}
             <Button onClick={onSignOut}>Sign out</Button>
           </Nav>
         </TopBar>
