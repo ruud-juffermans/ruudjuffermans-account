@@ -18,6 +18,8 @@ export interface PlatformApp {
 export interface PlatformConfig {
   apps: PlatformApp[];
   accountUrl: string;
+  // The portfolio site — a valid return_url origin, but not an app tile.
+  websiteUrl?: string;
 }
 
 export interface SessionInfo {
