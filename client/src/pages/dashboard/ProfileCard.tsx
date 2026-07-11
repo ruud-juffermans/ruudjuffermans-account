@@ -126,7 +126,7 @@ export function ProfileCard() {
             </Field>
             <PwRow>
               <Field>
-                New password <span style={{ opacity: 0.6 }}>(min 8 characters)</span>
+                New password
                 <Input
                   type="password"
                   autoComplete="new-password"
@@ -135,6 +135,7 @@ export function ProfileCard() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
+                <Muted>Min 8 characters.</Muted>
               </Field>
               <Field>
                 Confirm new password
