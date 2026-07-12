@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Eyebrow, FadeRise, Hero } from '../../components/ui';
+import { Logo } from '../../components/Logo';
 
 // Centered auth card on the ruudjuffermans.nl hero background, shared by all
 // auth pages so the whole flow looks like one product.
@@ -20,6 +21,9 @@ export function AuthShell({
       <Content>
         <FadeRise>
           <Card>
+            <LogoRow>
+              <Logo size={44} />
+            </LogoRow>
             <Eyebrow>Ruudjuffermans Account</Eyebrow>
             <Title>{title}</Title>
             {subtitle && <Subtitle>{subtitle}</Subtitle>}
@@ -60,6 +64,10 @@ const Card = styled.div`
   @media (max-width: 480px) {
     padding: 32px 24px 28px;
   }
+`;
+
+const LogoRow = styled.div`
+  margin-bottom: 18px;
 `;
 
 const Title = styled.h1`

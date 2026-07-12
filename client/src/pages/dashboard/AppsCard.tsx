@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { loadConfig } from '../../api';
 import type { PlatformConfig } from '../../types';
 import { Alert, Card, SectionLead, SectionTitle } from '../../components/ui';
+import { AppTile } from '../../components/AppTile';
 
 function host(url: string): string {
   try {
@@ -31,7 +32,7 @@ export function AppsCard() {
         <Grid>
           {(config?.apps ?? []).map((app) => (
             <Tile key={app.id} href={app.url}>
-              <Mark aria-hidden="true">{app.name.charAt(0).toUpperCase()}</Mark>
+              <AppTile app={app.id} size={40} />
               <TileText>
                 <TileName>{app.name}</TileName>
                 <TileHost>{host(app.url)}</TileHost>
@@ -72,21 +73,6 @@ const Tile = styled.a`
     transform: translateY(-1px);
     box-shadow: 0 10px 28px var(--app-red-glow);
   }
-`;
-
-const Mark = styled.span`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 12px;
-  background: var(--app-red-muted);
-  color: var(--app-red);
-  font-family: 'Bricolage Grotesque Variable', Georgia, serif;
-  font-weight: 800;
-  font-size: 1.1rem;
 `;
 
 const TileText = styled.span`

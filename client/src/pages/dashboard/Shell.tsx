@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth';
 import { Button, Hero } from '../../components/ui';
+import { Logo } from '../../components/Logo';
 
 // Shared chrome for the signed-in pages (apps overview + settings): brand bar
 // with navigation and sign-out, on the ruudjuffermans.nl hero background.
@@ -20,7 +21,10 @@ export function Shell({ children }: { children: ReactNode }) {
       <Page>
         <TopBar>
           <Brand>
-            ruudjuffermans<span>account</span>
+            <Logo size={28} />
+            <Wordmark>
+              ruudjuffermans<span>account</span>
+            </Wordmark>
           </Brand>
           <Nav>
             <TabLink to="/" end>
@@ -60,13 +64,18 @@ const TopBar = styled.div`
 `;
 
 const Brand = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: 'Bricolage Grotesque Variable', Georgia, serif;
   font-weight: 800;
   font-size: 1.2rem;
   letter-spacing: -0.035em;
   color: var(--app-text-primary);
   white-space: nowrap;
+`;
 
+const Wordmark = styled.span`
   span {
     color: var(--app-red);
     margin-left: 0.4em;
