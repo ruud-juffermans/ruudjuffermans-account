@@ -8,6 +8,7 @@ RUN npm ci
 
 COPY tsconfig.json vite.config.ts index.html ./
 COPY src ./src
+COPY public ./public
 
 # Vite inlines VITE_* env at build time. Pass the production API origin in.
 ARG VITE_API_URL=https://api.ruudjuffermans.nl
